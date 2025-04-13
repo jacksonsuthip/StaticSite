@@ -41,7 +41,10 @@
         <div class="row g-4">
             <div class="col-md-8">
                 <div class="calculator">
-                    <h4 class="mb-4">வட்டி கணிப்பான்</h4>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h4 class="mb-4">வட்டி கணிப்பான்</h4>
+                        <button class="btn btn-clear" onclick="clearCalculator()">Clear</button>
+                    </div>
                     <div class="mb-3">
                         <!-- <label for="totalAmount" class="form-label">மொத்த தொகை</label> -->
                         <input type="text" class="form-control" id="totalAmount" placeholder="மொத்த தொகை"
@@ -49,26 +52,30 @@
                         <span class="text-danger small" id="amountError"></span>
                     </div>
                     <div class="mb-3">
-                        <!-- <label for="interestRate" class="form-label">வட்டி (%)</label> -->
-                        <input type="text" class="form-control" id="interestRate" placeholder="வட்டி (%)"
-                            onkeydown="handleKeyDown(event)" style="background: #92ffcd;">
-                        <span class=" text-danger small" id="interestError"></span>
+                        <div class="d-flex gap-2">
+                            <input type="text" class="form-control" id="interestRate" placeholder="வட்டி பைசா"
+                                onkeydown="handleKeyDown(event)" style="background: #92ffcd;">
+                            <button class="btn btn-success" onclick="calculateInterest()"> = </button>
+                        </div>
+                        <span class="text-danger small" id="interestError"></span>
                     </div>
                     <div class="mb-3">
-                        <!-- <label for="interestAmount" class="form-label">வட்டி தொகை</label> -->
-                        <input type="text" class="form-control" id="interestAmount" placeholder="வட்டி தொகை"
-                            onkeydown="handleKeyDownForReverse(event)" style="background-color: #89c8ff;">
+                        <div class="d-flex gap-2">
+                            <input type="text" class="form-control" id="interestAmount" placeholder="வட்டி தொகை"
+                                onkeydown="handleKeyDownForReverse(event)" style="background-color: #89c8ff;">
+                            <button class="btn btn-primary" onclick="calculateInterestPercent()"> = </button>
+                        </div>
                         <span class="text-danger small" id="interestAmountError"></span>
                     </div>
-                    <div class="d-flex gap-2 flex-wrap">
+                    <!-- <div class="d-flex gap-2 flex-wrap">
                         <button class="btn btn-success flex-grow-1" onclick="calculateInterest()">Calculate வட்டி
                             தொகை</button>
                         <button class="btn btn-primary flex-grow-1" onclick="calculateInterestPercent()">வட்டி சதவீதத்தை
                             காண்க</button>
                         <button class="btn btn-clear flex-grow-1" onclick="clearCalculator()">Clear</button>
-                    </div>
+                    </div> -->
                     <div class="mt-4">
-                        <h5>Result: <span id="resultDisplay">0</span></h5>
+                        <h5>Result: <strong><span id="resultDisplay" style="font-size: larger;">0</span></strong></h5>
                     </div>
                 </div>
             </div>
@@ -140,16 +147,16 @@
             if (hasError) return;
 
             const result = (total * interest) / 100;
-            document.getElementById('resultDisplay').innerText = result.toLocaleString('en-IN', {
+            document.getElementById('resultDisplay').innerText = "₹" + result.toLocaleString('en-IN', {
                 minimumFractionDigits: 0,
-                maximumFractionDigits: 4
+                maximumFractionDigits: 2
             });
 
             const historyItem = `<li>₹${total.toLocaleString('en-IN')} * ${interest} / 100 → <strong>₹${result.toLocaleString('en-IN', {
                 minimumFractionDigits: 0,
-                maximumFractionDigits: 4
+                maximumFractionDigits: 2
             })}</strong></li>`;
-            document.getElementById('historyList').innerHTML += historyItem;
+            document.getElementById('historyList').innerHTML = historyItem + document.getElementById('historyList').innerHTML;
         }
 
         function calculateInterestPercent() {
@@ -181,14 +188,14 @@
             const interestPercent = (interestAmount / total) * 100;
             document.getElementById('resultDisplay').innerText = interestPercent.toLocaleString('en-IN', {
                 minimumFractionDigits: 0,
-                maximumFractionDigits: 4
-            }) + '%';
+                maximumFractionDigits: 2
+            }) + ' பைசா';
 
             const historyItem = `<li>₹${interestAmount.toLocaleString('en-IN')} / ₹${total.toLocaleString('en-IN')} * 100 → <strong>${interestPercent.toLocaleString('en-IN', {
                 minimumFractionDigits: 0,
-                maximumFractionDigits: 4
-            })}%</strong></li>`;
-            document.getElementById('historyList').innerHTML += historyItem;
+                maximumFractionDigits: 2
+            })} பைசா</strong></li>`;
+            document.getElementById('historyList').innerHTML = historyItem + document.getElementById('historyList').innerHTML;
         }
 
         function clearCalculator() {
