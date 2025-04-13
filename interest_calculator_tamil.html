@@ -28,6 +28,14 @@
             background-color: #dc3545;
             color: white;
         }
+
+        .equal-btn {
+            font-size: x-large;
+            font-weight: 900;
+            padding-left: 25px;
+            padding-right: 25px;
+            padding-bottom: 10px;
+        }
     </style>
 </head>
 
@@ -54,16 +62,17 @@
                     <div class="mb-3">
                         <div class="d-flex gap-2">
                             <input type="text" class="form-control" id="interestRate" placeholder="வட்டி பைசா"
-                                onkeydown="handleKeyDown(event)" style="background: #92ffcd;">
-                            <button class="btn btn-success" onclick="calculateInterest()"> = </button>
+                                onkeydown="handleKeyDown(event)" style="background: #92ffcd; margin-top: 2px;">
+                            <button class="btn btn-success equal-btn" onclick="calculateInterest()"> = </button>
                         </div>
                         <span class="text-danger small" id="interestError"></span>
                     </div>
                     <div class="mb-3">
                         <div class="d-flex gap-2">
                             <input type="text" class="form-control" id="interestAmount" placeholder="வட்டி தொகை"
-                                onkeydown="handleKeyDownForReverse(event)" style="background-color: #89c8ff;">
-                            <button class="btn btn-primary" onclick="calculateInterestPercent()"> = </button>
+                                onkeydown="handleKeyDownForReverse(event)"
+                                style="background-color: #89c8ff; margin-top: 2px;">
+                            <button class="btn btn-primary equal-btn" onclick="calculateInterestPercent()"> = </button>
                         </div>
                         <span class="text-danger small" id="interestAmountError"></span>
                     </div>
@@ -210,6 +219,7 @@
 
         function clearHistory() {
             document.getElementById('historyList').innerHTML = '';
+            clearCalculator();
         }
     </script>
 </body>
